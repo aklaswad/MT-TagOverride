@@ -1,8 +1,0 @@
-Name: SubInstall
-id: SubInstall
-tags:
-    block:
-        SubInstall: $SubInstall::SubInstall::_hdlr_sub_install
-    function:
-        SuperTag: $SubInstall::SubInstall::_hdlr_super_tag
-

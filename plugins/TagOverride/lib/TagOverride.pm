@@ -1,8 +1,8 @@
-package SubInstall;
+package TagOverride;
 use strict;
 use warnings;
 
-sub _hdlr_sub_install {
+sub _hdlr_tag_override {
     my ($ctx, $args) = @_;
     my $name = $args->{name};
     my $super = $ctx->handler_for($name)

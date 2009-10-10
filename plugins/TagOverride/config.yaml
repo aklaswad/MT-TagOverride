@@ -1,0 +1,11 @@
+name: TagOverride
+id: TagOverride
+author_name: Akira Sawada
+author_link: 'http://blog.aklaswad.com/'
+description: Provide a tag that can override native tags by MTML itself.
+tags:
+    block:
+        TagOverride: $TagOverride::TagOverride::_hdlr_tag_override
+    function:
+        SuperTag: $TagOverride::TagOverride::_hdlr_super_tag
+
