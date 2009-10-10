@@ -27,7 +27,9 @@ sub _hdlr_tag_override {
 
 sub _hdlr_super_tag {
     my ( $ctx, $args, $cond ) = @_;
-    my $hdlr = $ctx->stash('__installed_handler');
+    my $hdlr = $ctx->stash('__installed_handler')
+        or return $ctx->error('Cannot use mt:SuperTag outside of TagOverride block');
+
     ## import args from var
     my $orig_args = $ctx->var('args');
     my %orig_vars;
@@ -37,7 +39,7 @@ sub _hdlr_super_tag {
     }
     local $ctx->{__stash}{tokens} = $ctx->{__stash}{orig_tokens};
     my $res = $hdlr->invoke_super(@_)
-        or print $ctx->error('failed to invoke super handler');
+        or return $ctx->error('Failed to invoke super handler: ' . $ctx->errstr);
     for my $k ( keys %orig_vars ) {
         $args->{$k} = $orig_vars{$k};
     }
