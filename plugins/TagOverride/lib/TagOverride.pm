@@ -17,6 +17,8 @@ sub _hdlr_tag_override {
         local $local_ctx->{__stash}{tokens} = $tokens;
         # export args to vars
         local $local_ctx->{__stash}{vars}{args} = $local_args;
+        # overrided contents
+        local $local_ctx->{__stash}{__overrided_contents} = undef;
         return $local_ctx->slurp($local_args, $local_cond);
     };
     my $super_clone = MT::Template::Handler->new( $super->values );
@@ -38,6 +40,11 @@ sub _hdlr_super_tag {
         $args->{$k} = $orig_args->{$k};
     }
     local $ctx->{__stash}{tokens} = $ctx->{__stash}{orig_tokens};
+
+    if (my $overrided = $ctx->stash('__overrided_contents')) {
+        $ctx->{__stash}{tokens} = $overrided;
+    }
+
     my $res = $hdlr->invoke_super(@_)
         or return $ctx->error('Failed to invoke super handler: ' . $ctx->errstr);
     for my $k ( keys %orig_vars ) {
@@ -46,4 +53,17 @@ sub _hdlr_super_tag {
     $res;
 }
 
+sub _hdlr_contents_override {
+    my ($ctx, $args, $cond) = @_;
+    my $hdlr = $ctx->stash('__installed_handler')
+        or return $ctx->error('Cannot use mt:ContentsOverride outside of TagOverride block');
+    $ctx->stash('__overrided_contents', $ctx->stash('tokens'));
+    return '';
+}
+
+sub _hdlr_super_contents {
+    my ($ctx, $args, $cond) = @_;
+    local $ctx->{__stash}{tokens} = $ctx->{__stash}{orig_tokens};
+    return $ctx->slurp($args, $cond);
+}
 1;
