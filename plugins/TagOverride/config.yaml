@@ -6,6 +6,8 @@ description: Provide a tag that can override native tags by MTML itself.
 tags:
     block:
         TagOverride: $TagOverride::TagOverride::_hdlr_tag_override
+        ContentsOverride: $TagOverride::TagOverride::_hdlr_contents_override
     function:
         SuperTag: $TagOverride::TagOverride::_hdlr_super_tag
+        SuperContents: $TagOverride::TagOverride::_hdlr_super_contents
 
