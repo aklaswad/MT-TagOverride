@@ -33,7 +33,6 @@ for my $test ( @$test_suite ) {
 }
 
 __END__
-# 0
 tests:
     -
         description: install
@@ -49,5 +48,10 @@ tests:
     -
         tmpl: '<mt:entries id="1"><mt:entryTitle></mt:entries>'
         expect: 'fizzfooA Rainy Daybarbuzz'
-
+    -
+        tmpl: '<mt:tagOverride name="entries"><mt:contentsOverride>*<mt:superContents>*</mt:contentsOverride><mt:superTag></mt:tagOverride>'
+        expect: ''
+    -
+        tmpl: '<mt:entries id="1"><mt:entryTitle></mt:entries>'
+        expect: '*fizzfooA Rainy Daybarbuzz*'
 
