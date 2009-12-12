@@ -48,7 +48,7 @@ sub _hdlr_super_tag {
         local $ctx->{__stash}{tokens} = $overrided || $ctx->{__stash}{orig_tokens};
         local $ctx->{__stash}{__installed_handler} = $hdlr->super;
         local $ctx->{__stash}{tag} = $tag;
-        $res = $hdlr->invoke_super($ctx, $args, $cond)
+        defined($res = $hdlr->invoke_super($ctx, $args, $cond))
             or return $ctx->error('Failed to invoke super handler: ' . $ctx->errstr);
     }
     for my $k ( keys %orig_vars ) {
